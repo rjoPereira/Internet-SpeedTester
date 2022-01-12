@@ -62,5 +62,8 @@ def run(st, df):
 if __name__ == "__main__":
     st = speedtest.Speedtest()
     st.get_best_server()
-    df = pd.read_csv("data.csv")
+    try:
+        df = pd.read_csv("data.csv")
+    except FileNotFoundError:
+        df = pd.Dataframe()
     run(st, df)
