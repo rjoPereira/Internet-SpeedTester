@@ -60,10 +60,16 @@ def run(st, df):
 
 
 if __name__ == "__main__":
-    st = speedtest.Speedtest()
-    st.get_best_server()
     try:
         df = pd.read_csv("data.csv")
     except FileNotFoundError:
-        df = pd.Dataframe()
-    run(st, df)
+        df = pd.DataFrame()
+        df.append(["download", "upload", "ping", "date", "time"])
+
+    try:
+        st = speedtest.Speedtest()
+        st.get_best_server()
+        run(st, df)
+    except speedtest.ConfigRetrievalError:
+        print("Couldn't connect to a server.")
+
